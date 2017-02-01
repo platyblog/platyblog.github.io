@@ -2,19 +2,19 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Platyblog</title>
-    <link>http://platygroup.github.io/post/index.xml</link>
+    <link>http://platyblog.github.io/post/index.xml</link>
     <description>Recent content in Posts on Platyblog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 01 Feb 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://platygroup.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://platyblog.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Welcome to the platyblog!</title>
-      <link>http://platygroup.github.io/post/firstpost/</link>
+      <link>http://platyblog.github.io/post/firstpost/</link>
       <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
       
-      <guid>http://platygroup.github.io/post/firstpost/</guid>
+      <guid>http://platyblog.github.io/post/firstpost/</guid>
       <description>&lt;p&gt;This is our first post ever! Platyblog is the blog of the Platypus reading group
 located in Rennes in the Celtique research group at Inria/Irisa.&lt;/p&gt;
 
