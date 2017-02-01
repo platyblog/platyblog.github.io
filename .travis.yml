@@ -7,7 +7,7 @@ env:
   global:
   - USERNAME=platyblog
   - REPO=platyblog.github.io
-  - secure: SpWy2SLpMz/C89M7OOuTnFlsfbXrySagGj+VMtejtvYKKHQnx+j8IUZx5OBpyecReeAdfScplkgN7RgGTacVwtMZMPciATXsSyt3uL0+MCJ2AB+N6DwyTdxOp/96Ub3NWgY6jiO9+3Jd5bkH+B1NWMsYgW6A0JAY6oPNB2AhVJOIZubjM4q9ar6RgRGNqRxGzFZhApFZqgCf13ueJtdRL4YmCpNpev6eqAXYXmMkcXm5/yPLQPTKIcTrvurH23cOSZOzdpJi+f18XsQWzxh84Y+mJPEDskJlQCUlg3KKhDp2xNekTbWm56DygVBNOFCdZDMUqv7xj+q10G8RS1XhD+Q9ePWtExsNnqlhrkbnieu5R4dqhcwRWphF151YAFLGN7s7NEqxa87q9G3zP5tM+bX/sN8Bzu3IavZqhrb9AaSjjJiS2K6YLeVqWoGovfxU5MCxD6qWg9owENp5xst25q7wl73eJD0m+IZIfBETA7Ogi7yRcim6Qo0gJjMEWL2CoKuS4Fyj567qvnxfTap4U4rT3Pi6MRrUXB6Lv1iEUlYmIUP5GI+YSmR9/BRQGgIVod/oEkAMVGP6lMbPsgV2eaSoWJe0vCjgbJtLtf/faNJQn/1wbkKPDSj9epgYo2KdVs+ryt4BMLDtOjOSq479rfVot1z8PQOUkjUH5V5tXFY=
+  - secure: iucsJo7pSqc2vUPIEzYy6XIOPde0O/FsSYuDGzaYpHdp7bUWT9aIH6UTFhyVI/u75MFaQWxOcLDK3P5A5aawfuALvkYn3PXUrhZV1YFuXBTQBwWX5l/BEy4UiM0gOOL6oCHBlNTiTIL7EasF8FsX7Re0nsfkSjfWS8MQbPUWW+srlOi4ix2mF5iKL93YknZkl1vub/OJdZtrRPP0klt6pqSZen3rBHZZ0tvuXHjsWwiTIaKghXc6nl8aseHnsU8jcDb8mV5EQDVmg5JXeP44ztB2PwtV7gxbGMvVpKwDnLDUvS5u25r8G17Fd4idtYM/hzin/lhjq8X+xPPFuIcHxhnJTYKrd63mJwP06Pq1bXo3nT9ZVfNQhBjAW4zUtU+4YuGL1GmaPh5z64NHZDasxKavOo2k4+CEMwyS7BbbdAp2Y+375sIodsFKypSX3jt+oCPrzQ2H1NOQ6GGw1WOzOLtmYz7hsn8Xv4uLDdUjw2CMeDXw+3B0kF8ZNbDRW2SOLLD13aVbHeY1hYLWo+j+oIe2DPbWK3QZANSOPrLNUqK4pGi5XjVhe79fBRH6NsZ9cCqBlxo3KC5/DHB/nedz7rJPz8NwpXMDJI8m+Ck6Qp3N5WrXN3UXXRumrGWYwg8RMk+l/dNFgrW1UFE/s9E0xZjAZIN5qdJPm8b+SaunBek=
 before_script:
 - git clone --branch v2 https://github.com/go-yaml/yaml $GOPATH/src/gopkg.in/yaml.v2
 - go get -u -v github.com/spf13/hugo
@@ -18,7 +18,8 @@ after_success:
 - git init
 - git config user.name "Travis Worker"
 - git config user.email "travis@travis-ci.org"
-- git remote add upstream https://$GH_TOKEN@github.com/$USERNAME/$REPO.git > /dev/null 2>&1
+- git remote add upstream https://$GH_TOKEN@github.com/$USERNAME/$REPO.git > /dev/null
+  2>&1
 - git fetch upstream
 - git reset upstream/master
 - git add -A .
