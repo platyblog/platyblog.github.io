@@ -1,0 +1,33 @@
+baseurl = "http://platygroup.github.io/"
+languageCode = "en-us"
+title = "Platyblog"
+theme = "after-dark"
+paginate = 5
+
+enableRobotsTXT = true # Suggested, enable robots.txt file
+googleAnalytics = "" # Optional, add tracking Id for analytics
+SectionPagesMenu = "main" # Enable menu system for lazy bloggers
+
+[params]
+    title = "Platyblog"
+    subtitle = "dunno"
+    name = "Platypus"
+    bio = "Platypus reading group"
+    description = "Platyblog"
+    keepReadingStr = "Keep reading"
+    backtotopStr = "Back to top"
+    pageNotFoundTitle = "404 - Page not found"
+    show_menu = true
+    powered_by = false
+
+[menu]
+  [[menu.main]]
+    name = "Home"
+    weight = 0
+    identifier = "home"
+    url = "/"
+  [[menu.main]]
+    name = "Posts"
+    weight = 1
+    identifier = "post"
+    url = "/post/"

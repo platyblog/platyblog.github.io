@@ -1,0 +1,26 @@
+language: go
+go:
+- 1.7.1
+notifications:
+  email: false
+env:
+  global:
+  - USERNAME=platyblog
+  - REPO=platyblog.github.io
+  - secure: SpWy2SLpMz/C89M7OOuTnFlsfbXrySagGj+VMtejtvYKKHQnx+j8IUZx5OBpyecReeAdfScplkgN7RgGTacVwtMZMPciATXsSyt3uL0+MCJ2AB+N6DwyTdxOp/96Ub3NWgY6jiO9+3Jd5bkH+B1NWMsYgW6A0JAY6oPNB2AhVJOIZubjM4q9ar6RgRGNqRxGzFZhApFZqgCf13ueJtdRL4YmCpNpev6eqAXYXmMkcXm5/yPLQPTKIcTrvurH23cOSZOzdpJi+f18XsQWzxh84Y+mJPEDskJlQCUlg3KKhDp2xNekTbWm56DygVBNOFCdZDMUqv7xj+q10G8RS1XhD+Q9ePWtExsNnqlhrkbnieu5R4dqhcwRWphF151YAFLGN7s7NEqxa87q9G3zP5tM+bX/sN8Bzu3IavZqhrb9AaSjjJiS2K6YLeVqWoGovfxU5MCxD6qWg9owENp5xst25q7wl73eJD0m+IZIfBETA7Ogi7yRcim6Qo0gJjMEWL2CoKuS4Fyj567qvnxfTap4U4rT3Pi6MRrUXB6Lv1iEUlYmIUP5GI+YSmR9/BRQGgIVod/oEkAMVGP6lMbPsgV2eaSoWJe0vCjgbJtLtf/faNJQn/1wbkKPDSj9epgYo2KdVs+ryt4BMLDtOjOSq479rfVot1z8PQOUkjUH5V5tXFY=
+before_script:
+- git clone --branch v2 https://github.com/go-yaml/yaml $GOPATH/src/gopkg.in/yaml.v2
+- go get -u -v github.com/spf13/hugo
+script:
+- hugo
+after_success:
+- cd public
+- git init
+- git config user.name "Travis Worker"
+- git config user.email "travis@travis-ci.org"
+- git remote add upstream https://$GH_TOKEN@github.com/$USERNAME/$REPO.git > /dev/null 2>&1
+- git fetch upstream
+- git reset upstream/master
+- git add -A .
+- git commit -m "Update $(date '+%m/%d/%y %H:%M')."
+- git push -q upstream HEAD:master > /dev/null 2>&1
