@@ -1,5 +1,0 @@
-notifications:
-  email: false
-branches:
-  only:
-    - source
