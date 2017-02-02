@@ -1,6 +1,6 @@
 +++
 date = "2017-02-01"
-title = "$\mathbb{N}\rightarrow\mathbb{B}$ is a searchable set"
+title = "$\\mathbb{N}\\rightarrow\\mathbb{B}$ is a searchable set"
 author = "Alix"
 description = "First post ever"
 tags = []
