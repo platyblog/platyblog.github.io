@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Platyblog</title>
-    <link>http://platyblog.github.io/index.xml</link>
-    <description>Recent content on Platyblog</description>
+    <title>Math on Platyblog</title>
+    <link>http://platyblog.github.io/categories/math/index.xml</link>
+    <description>Recent content in Math on Platyblog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Feb 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://platyblog.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://platyblog.github.io/categories/math/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>$\mathbb{N}\rightarrow\mathbb{B}$ is a searchable set</title>
@@ -59,19 +58,6 @@ as it would need to be infinite. Therefore $\eta$ must be bounded.&lt;/p&gt;
 
 &lt;p&gt;However, this only proves that such a bound exists, we still do not know how to find its value,
 which is necessary to know when to stop while searching for a witness.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>Welcome to the platyblog!</title>
-      <link>http://platyblog.github.io/post/firstpost/</link>
-      <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://platyblog.github.io/post/firstpost/</guid>
-      <description>&lt;p&gt;This is our first post ever! Platyblog is the blog of the Platypus reading group
-located in Rennes in the Celtique research group at Inria/Irisa.&lt;/p&gt;
-
-&lt;p&gt;We will mainly post about programming languages research and stuff.&lt;/p&gt;
 </description>
     </item>
     

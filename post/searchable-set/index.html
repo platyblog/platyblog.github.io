@@ -4,16 +4,14 @@
     <meta name="generator" content="Hugo 0.19-DEV" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Platyblog</title>
-    <meta name="description" content="Platyblog">
+    <title>$\mathbb{N}\rightarrow\mathbb{B}$ is a searchable set &ndash; Platyblog</title>
     
-
-
-
+      <meta name="description" content="First post ever">
     
-      <link href="http://platyblog.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Platyblog" />
     
-    <link rel="canonical" href="http://platyblog.github.io/">
+    <link rel="canonical" href="http://platyblog.github.io/post/searchable-set/">
+    
+    
     <link rel="shortcut icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABGdBTUEAALGPC/xhBQAAG+ZJREFU
 eAHNmudzHEd6xt/NETkSBEEwiJk8SlS05DtXqc6fr8r2J/+V9jfflSWfpTtlSmISSDGByFhgF5vz
 rn9PD5pckiDvyqTObnIwMz0z3f2m5w29ITPrc/wiLRQKWTgcfm7sfr9vOtT0zuB7vV7PdPjnz338
@@ -184,45 +182,127 @@ jJasrM9JHpMQoTocKVCL4IPr/fOT+fzoT3p+SelrFs2odf2vmwZACVzT9SAJ8iKO6OCx+/tKkw2M
   }
 </style>
 
+    <script type="text/javascript">
+  window.MathJax = {
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  };
+</script>
+<script type="text/javascript"
+  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
   </head>
   <body class="hack dark main container">
     <header>
-      
+  
   <nav>
     
     
-      <a class="active" href="/">Home</a>
+      <a class="" href="/">Home</a>
     
-      <a class="" href="/post/">Posts</a>
+      <a class="active" href="/post/">Posts</a>
     
   </nav>
 
 
-    </header>
+</header>
     <main>
-      <h1>Platyblog</h1>
-      
-        <h2><a href="http://platyblog.github.io/post/searchable-set/">$\mathbb{N}\rightarrow\mathbb{B}$ is a searchable set</a></h2>
-        <p>I never quite understood why all the crazy magic in this post actually works, nor did I manage to grok Escardo&rsquo;s paper. But I will try to write what I understood so far.
-Escardo shows that the Cantor space ($\mathbb{N}\rightarrow\mathbb{B}$ where $\mathbb{B}$ is the set of booleans) admits exhaustive search, meaning that for any total predicate $\varphi$, it is possible to find a witness $w$ such that $\varphi(w)$ is true or show that such a witness doesn&rsquo;t exist in finite time.</p>
-      
-        <h2><a href="http://platyblog.github.io/post/firstpost/">Welcome to the platyblog!</a></h2>
-        <p>This is our first post ever! Platyblog is the blog of the Platypus reading group located in Rennes in the Celtique research group at Inria/Irisa.
-We will mainly post about programming languages research and stuff.</p>
-      
-    </main>
+  <h1>$\mathbb{N}\rightarrow\mathbb{B}$ is a searchable set</h1>
+  <p>I never quite understood why all the crazy magic in this
+<a href="http://math.andrej.com/2007/09/28/seemingly-impossible-functional-programs/">post</a> actually works,
+nor did I manage to grok Escardo&rsquo;s <a href="http://www.cs.bham.ac.uk/~mhe/papers/exhaustive.pdf">paper</a>.
+But I will try to write what I understood so far.</p>
+
+<p>Escardo shows that the Cantor space ($\mathbb{N}\rightarrow\mathbb{B}$ where $\mathbb{B}$
+is the set of booleans) admits exhaustive search,
+meaning that for any total predicate $\varphi$, it is possible to find a witness $w$ such that
+$\varphi(w)$ is <em>true</em> or show that such a witness doesn&rsquo;t exist in finite time.</p>
+
+<p>This is seemingly impossible as the Cantor space is clearly infinite.
+However, the main point is that $\varphi$ is a <em>total</em> predicate,
+meaning that for every $u$, $\varphi(u)$ takes a finite time to compute.
+It is thus necessary that for every <em>u</em>, there exists some $n$ such that $\varphi$
+only uses $u_0, &hellip;, u_n$ to compute its result $\varphi(u)$.</p>
+
+<p>Let&rsquo;s call $\eta(u)$ the number such that $\varphi$ only needs
+$u_0, &hellip;, u_{\eta(u)}$ to compute $\varphi(u)$. If $\eta$ could be bounded,
+then we would only need to feed a finite number of imputs to $\varphi$ to search
+through the whole Cantor space.</p>
+
+<p>Indeed, suppose that $\eta$ can be bounded by $k$, then necessarily if the length
+of the longest common prefix between $u$ and $v$ is greater than $k$
+(i.e. $u_0 = v_0, &hellip;, u_k~ = v_k$) then $\varphi(u) = \varphi(v)$ because
+$\varphi$ cannot differentiate $u$ from $v$ by definition of $\eta$.</p>
+
+<p>How can we show that $\eta$ is bounded? Suppose that it isn&rsquo;t,
+then there must be a sequence $u^0, u^1, &hellip;$ such that $\eta(u^0) &lt; \eta(u^1) &lt; \eta(u^2) &lt; &hellip;$
+For all $p &gt; 0$, the longest common prefix of $u^0$ and $u^p$ is strictly smaller than
+$\eta(u^0)$, otherwise $\varphi$ wouldn&rsquo;t be able to differentiate $u^0$ from $u^p$ by definition
+of $\eta(u^0)$. However, there is only a finite number of possible prefix smaller than $\eta(u^0)$,
+thus according to the pigeonhole principle, there must be a subsequence
+$u^{r_0(0)}, u^{r_0(1)}, &hellip;$ such that they all have a same common prefix of at
+least length 1 and we can choose them so that $1 \leq \eta(u^{r_0(0)}) &lt; \eta(u^{r_0(1)}), &hellip;$
+By reiterating the process, we can build a new subsequence $u^{r_1(0)}, u^{r_1(1)}, &hellip;$
+such that they all have a same common prefix of at least length 2 and
+$2 \leq \eta(u^{r_1(0)}) &lt; \eta(u^{r_1(1)}), &hellip;$, etc.</p>
+
+<p>Finally, the term $w = \lambda x. u^{r_x(0)}$ is such $\eta(w) \geq p$ for any $p$ as
+$w$ has the same $p$-length prefix as $u^{r_p(0)}$. This is obviously impossible
+as it would need to be infinite. Therefore $\eta$ must be bounded.</p>
+
+<p>However, this only proves that such a bound exists, we still do not know how to find its value,
+which is necessary to know when to stop while searching for a witness.</p>
+
+</main>
     <footer>
-      <nav>
+  <hr>
   <p>
-    
-    <span>Page 1 of 1</span>
-    
-  </p>
-</nav>
+  Published
+  
+  on <time datetime="2017-02-01T00:00:00&#43;00:00">1 Feb, 2017</time>
+  
+    in <a href="/categories/math/">math</a>
+  
+  
+  using 456 words
+  for a 3 minute read.
+</p>
 
-      
+  
 
-    </footer>
+
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+  
+  
+  
+
+
+
+  
+
+</footer>
     
   </body>
 </html>
