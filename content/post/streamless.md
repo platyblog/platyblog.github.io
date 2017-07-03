@@ -81,15 +81,24 @@ We therefore are able to build a function get_next which associates to a stream 
 
 The important intuition is that our oracle can therefore be used at any moment to know whether I can still find both an element of X and one of Y in my stream. We can therefore now leverage get_next in order to build a stream of pairs in X * Y, until a collision is found and we propagate this collision for the remaining indices.
 By recurrence on the index, we define the following stream g:
-  - g 0 = get_next f
-  - g (S n) = inr collision                                       if g n = inr collision \\ we keep a found collision
-  - g (S n) = let n1,n2 be the indices of (g n) in                otherwise
-              let k := max(n1,n2) in                                        
-              let H := get_next (fun n => f(n + k)) in                                   \\ we shift f and ask get_next
-              if H = inr collision
-              then inr collision
-              else let n1',n2' be the indices of H in
-                  n1' + max (n1,n2), n2' + max(n1,n2)
+
+* g 0 = get_next f
+
+* g (S n) = inr collision                           when g n = inr collision \\ we keep a found collision
+
+* g (S n) = let n1,n2 be the indices of (g n) in           
+
+            let k := max(n1,n2) in                                        
+            
+            let H := get_next (fun n => f(n + k)) in                                   \\ we shift f and ask get_next
+            
+            if H = inr collision
+            
+            then inr collision
+            
+            else let n1',n2' be the indices of H in
+            
+                n1' + max (n1,n2), n2' + max(n1,n2)
                    
 More formally, in Coq, we obtain: 
 
