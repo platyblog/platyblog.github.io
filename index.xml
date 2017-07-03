@@ -2,12 +2,23 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Platyblog</title>
-    <link>http://platyblog.github.io/index.xml</link>
+    <link>http://platyblog.github.io/</link>
     <description>Recent content on Platyblog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 01 Feb 2017 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://platyblog.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 03 Jul 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://platyblog.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Just testing stuff</title>
+      <link>http://platyblog.github.io/post/test/</link>
+      <pubDate>Mon, 03 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://platyblog.github.io/post/test/</guid>
+      <description>Inductive Foo: Type := Bar | Baz.  </description>
+    </item>
     
     <item>
       <title>$\mathbb{N}\rightarrow\mathbb{B}$ is a searchable set</title>
@@ -15,51 +26,8 @@
       <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>http://platyblog.github.io/post/searchable-set/</guid>
-      <description>&lt;p&gt;I never quite understood why all the crazy magic in this
-&lt;a href=&#34;http://math.andrej.com/2007/09/28/seemingly-impossible-functional-programs/&#34;&gt;post&lt;/a&gt; actually works,
-nor did I manage to grok Escardo&amp;rsquo;s &lt;a href=&#34;http://www.cs.bham.ac.uk/~mhe/papers/exhaustive.pdf&#34;&gt;paper&lt;/a&gt;.
-But I will try to write what I understood so far.&lt;/p&gt;
-
-&lt;p&gt;Escardo shows that the Cantor space ($\mathbb{N}\rightarrow\mathbb{B}$ where $\mathbb{B}$
-is the set of booleans) admits exhaustive search,
-meaning that for any total predicate $\varphi$, it is possible to find a witness $w$ such that
-$\varphi(w)$ is &lt;em&gt;true&lt;/em&gt; or show that such a witness doesn&amp;rsquo;t exist in finite time.&lt;/p&gt;
-
-&lt;p&gt;This is seemingly impossible as the Cantor space is clearly infinite.
-However, the main point is that $\varphi$ is a &lt;em&gt;total&lt;/em&gt; predicate,
-meaning that for every $u$, $\varphi(u)$ takes a finite time to compute.
-It is thus necessary that for every &lt;em&gt;u&lt;/em&gt;, there exists some $n$ such that $\varphi$
-only uses $u_0, &amp;hellip;, u_n$ to compute its result $\varphi(u)$.&lt;/p&gt;
-
-&lt;p&gt;Let&amp;rsquo;s call $\eta(u)$ the number such that $\varphi$ only needs
-$u_0, &amp;hellip;, u_{\eta(u)}$ to compute $\varphi(u)$. If $\eta$ could be bounded,
-then we would only need to feed a finite number of imputs to $\varphi$ to search
-through the whole Cantor space.&lt;/p&gt;
-
-&lt;p&gt;Indeed, suppose that $\eta$ can be bounded by $k$, then necessarily if the length
-of the longest common prefix between $u$ and $v$ is greater than $k$
-(i.e. $u_0 = v_0, &amp;hellip;, u_k~ = v_k$) then $\varphi(u) = \varphi(v)$ because
-$\varphi$ cannot differentiate $u$ from $v$ by definition of $\eta$.&lt;/p&gt;
-
-&lt;p&gt;How can we show that $\eta$ is bounded? Suppose that it isn&amp;rsquo;t,
-then there must be a sequence $u^0, u^1, &amp;hellip;$ such that $\eta(u^0) &amp;lt; \eta(u^1) &amp;lt; \eta(u^2) &amp;lt; &amp;hellip;$
-For all $p &amp;gt; 0$, the longest common prefix of $u^0$ and $u^p$ is strictly smaller than
-$\eta(u^0)$, otherwise $\varphi$ wouldn&amp;rsquo;t be able to differentiate $u^0$ from $u^p$ by definition
-of $\eta(u^0)$. However, there is only a finite number of possible prefix smaller than $\eta(u^0)$,
-thus according to the pigeonhole principle, there must be a subsequence
-$u^{r_0(0)}, u^{r_0(1)}, &amp;hellip;$ such that they all have a same common prefix of at
-least length 1 and we can choose them so that $1 \leq \eta(u^{r_0(0)}) &amp;lt; \eta(u^{r_0(1)}), &amp;hellip;$
-By reiterating the process, we can build a new subsequence $u^{r_1(0)}, u^{r_1(1)}, &amp;hellip;$
-such that they all have a same common prefix of at least length 2 and
-$2 \leq \eta(u^{r_1(0)}) &amp;lt; \eta(u^{r_1(1)}), &amp;hellip;$, etc.&lt;/p&gt;
-
-&lt;p&gt;Finally, the term $w = \lambda x. u^{r_x(0)}$ is such $\eta(w) \geq p$ for any $p$ as
-$w$ has the same $p$-length prefix as $u^{r_p(0)}$. This is obviously impossible
-as it would need to be infinite. Therefore $\eta$ must be bounded.&lt;/p&gt;
-
-&lt;p&gt;However, this only proves that such a bound exists, we still do not know how to find its value,
-which is necessary to know when to stop while searching for a witness.&lt;/p&gt;
-</description>
+      <description>I never quite understood why all the crazy magic in this post actually works, nor did I manage to grok Escardo&amp;rsquo;s paper. But I will try to write what I understood so far.
+Escardo shows that the Cantor space ($\mathbb{N}\rightarrow\mathbb{B}$ where $\mathbb{B}$ is the set of booleans) admits exhaustive search, meaning that for any total predicate $\varphi$, it is possible to find a witness $w$ such that $\varphi(w)$ is true or show that such a witness doesn&amp;rsquo;t exist in finite time.</description>
     </item>
     
     <item>
@@ -68,11 +36,8 @@ which is necessary to know when to stop while searching for a witness.&lt;/p&gt;
       <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>http://platyblog.github.io/post/firstpost/</guid>
-      <description>&lt;p&gt;This is our first post ever! Platyblog is the blog of the Platypus reading group
-located in Rennes in the Celtique research group at Inria/Irisa.&lt;/p&gt;
-
-&lt;p&gt;We will mainly post about programming languages research and stuff.&lt;/p&gt;
-</description>
+      <description>This is our first post ever! Platyblog is the blog of the Platypus reading group located in Rennes in the Celtique research group at Inria/Irisa.
+We will mainly post about programming languages research and stuff.</description>
     </item>
     
   </channel>
