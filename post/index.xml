@@ -17,8 +17,8 @@
       <pubDate>Sun, 02 Jul 2017 00:00:00 +0000</pubDate>
       
       <guid>http://platyblog.github.io/post/streamless/</guid>
-      <description>A reddit user, /u/INL_TT, has recently proposed a few problems to be solved using your favourite proof assistant. The last one has been particularly interesting:coq-math-problems.
-The problem is taken from a paper by Coquand and Spiwack1 investigating ways to formalise in a constructivist context the notion of finite set. A common caracterisation of a finite set A is the impossibility to inject the natural numbers into A. Or phrased differently, any stream of elements of A contains a duplicate.</description>
+      <description>A reddit user, /u/INL_TT, has recently proposed a few problems to be solved using your favourite proof assistant. The last one has been particularly interesting: coq-math-problems.
+The problem is taken from a paper by Coquand and Spiwack1 investigating ways to formalise in a constructivist context the notion of finite set. A common characterisation of a finite set A is the impossibility to inject the natural numbers into A. Or phrased differently, any stream of elements of A contains a duplicate.</description>
     </item>
     
     <item>
