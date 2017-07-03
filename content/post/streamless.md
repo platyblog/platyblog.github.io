@@ -6,9 +6,9 @@ description = "A small, interesting constructivist problem"
 tags = []
 categories = ["math"]
 +++
-A reddit user, /u/INL_TT, has recently proposed a few problems to be solved using your favourite proof assistant. The last one has been particularly interesting:[coq-math-problems](https://coq-math-problems.github.io/Problem5/).
+A reddit user, /u/INL_TT, has recently proposed a few problems to be solved using your favourite proof assistant. The last one has been particularly interesting: [coq-math-problems](https://coq-math-problems.github.io/Problem5/).
 
-The problem is taken from a paper by Coquand and Spiwack[^1] investigating ways to formalise in a constructivist context the notion of finite set. A common caracterisation of a finite set A is the impossibility to inject the natural numbers into A. Or phrased differently, any stream of elements of A contains a duplicate. Formally, naming this caracterisation streamless:
+The problem is taken from a paper by Coquand and Spiwack[^1] investigating ways to formalise in a constructivist context the notion of finite set. A common characterisation of a finite set A is the impossibility to inject the natural numbers into A. Or phrased differently, any stream of elements of A contains a duplicate. Formally, naming this characterisation _streamless_:
 
 ```Coq
 Definition streamless (X : Set) := forall f : nat -> X,
@@ -22,19 +22,24 @@ Theorem streamless_sum : forall X Y,
     streamless X -> streamless Y -> streamless (X + Y).
 ```
 
-Let us first understand why the problem is non-trivial.
-Let $f: \mathbb N \rightarrow X + Y$. Classically, we obviously know that the stream $f$ contains either an infinity of elements of $X$ or an infinity of elements of $Y$, maybe of both. By extracting the corresponding substream, we should be able to conclude.
+Let's first understand why the problem is non-trivial.
+
+Let $f: \mathbb N \rightarrow X + Y$. Classically, we obviously know that the stream $f$ contains either an infinity of elements of $X$ or an infinity of elements of $Y$, maybe of both. By extracting such a substream, any of our oracles would allow us to conclude.
 
 However one cannot in general decide which of $X$ or $Y$ to chose: we therefore are seemingly unable to build neither a stream of $X$ nor a stream of $Y$, rendering our hypotheses useless.
 
-One could therefore ponder whether our definition of finite set can be reduced to one allowing us to only manipulate a list of values, rather than a stream. Indeed, a finite set $A$ is intuitively characterised by a finite cardinal, i.e. we can find a list of values containing any element of $A$. It however turns out that this alternative definition is strictly stronger, the streamless caracterisation does not allow us to compute the cardinal of our set.
+One could therefore ponder whether our definition of finite set can be reduced to one allowing us to only manipulate a list of values, rather than a stream. Indeed, a finite set $A$ is intuitively characterised by a finite cardinal, i.e. we can find a list of values containing any element of $A$. It however turns out that this alternative definition is strictly stronger, the streamless characterisation does not allow us to compute the cardinal of our set.
 
-It feels like we cannot extract a stream of one of our types, and it feels like we cannot reduce our definition to a list: I've been completely stuck! The first assertion of the previous sentence however turns out to be wrong, as David Reboullet found out and shared his proof with us. The proof goes as follows.
+It feels like we cannot extract a stream of one of our types, and it feels like we cannot reduce our definition to a list: I've been completely stuck! The first assertion of the previous sentence however turns out to be wrong, as David Reboullet found out and shared the following proof with us. It goes as follows.
 
-Assume that $f 0 = inl x0$. While we indeed cannot directly extract a substream of X, we can create one by filling out the elements of Y by the dummy value we found, $x0$. Let us name $proj_f$ this stream.
+Assume that $f~0 = inl~ x_0$. While we indeed cannot directly extract a substream of X, we can create one by filling out the elements of Y by the dummy value we found, $x_0$. Let us name $proj_f$ this stream.
+
 Now we can ask our oracle for a collision in $proj_f.$ We obtain two distinct indices $n_1,~n_2$ such that $proj_f(n_1) = proj_f(n_2)$. This may feel useless granted the collision is likely to be two occurrences of $x_0,$ but we actually do get something by looking at these indices in our original stream $f:$
-  * Either we find two elements of X: the collision was real, we won!
-  * Or we found at least one element of Y: in addition to $x_0$, we have a couple in X * Y, and their indices in $f$.
+
+* Either we find two elements of X: the collision was real, we won!
+
+* Or we found at least one element of Y: in addition to $x_0$, we have a couple in X * Y, and their indices in $f$.
+
 We therefore are able to build a function get_next which associates to a stream either a pair of elements, or a collision. Formally in Coq, we simply need to duplicate the code to account whether (f 0) is in X or in Y. With sub_stream_l and sub_stream_r are the obvious projections:
 
 ```Coq
@@ -82,23 +87,19 @@ We therefore are able to build a function get_next which associates to a stream 
 The important intuition is that our oracle can therefore be used at any moment to know whether I can still find both an element of X and one of Y in my stream. We can therefore now leverage get_next in order to build a stream of pairs in X * Y, until a collision is found and we propagate this collision for the remaining indices.
 By recurrence on the index, we define the following stream g:
 
-* g 0 = get_next f
+```
+ g 0 = get_next f
 
-* g (S n) = inr collision                           when g n = inr collision \\ we keep a found collision
+ g (S n) = inr collision when g n = inr collision \\ we keep a found collision
 
-* g (S n) = let n1,n2 be the indices of (g n) in           
-
-            let k := max(n1,n2) in                                        
-            
-            let H := get_next (fun n => f(n + k)) in                                   \\ we shift f and ask get_next
-            
-            if H = inr collision
-            
-            then inr collision
-            
-            else let n1',n2' be the indices of H in
-            
+ g (S n) = let n1,n2 be the indices of (g n) in 
+           let k := max(n1,n2) in
+           let H := get_next (fun n => f(n + k)) in \\ we shift f and query get_next 
+           if H = inr collision
+           then inr collision
+           else let n1',n2' be the indices of H in
                 n1' + max (n1,n2), n2' + max(n1,n2)
+```
                    
 More formally, in Coq, we obtain: 
 
@@ -136,11 +137,12 @@ We have built this way a new stream which only contains either collisions of the
 Asking once again the oracle what it has to say about the projection of (lift_get_next f) over X is enough to conclude. Indeed, once again, we can test the returned indices against the original stream. Two cases are possible:
 
 * Either both indices correspond to a pair of elements in (lift_get_next f). We have found a collision.
+
 * Or at least one of them is not a pair in (lift_get_next f). But then it contains a collision instead.
 
-Qed.
+Hence the result.
 
-Proving it formally, we as usual need to duplicate the code, and reason a bit about (lift_get_next f) to ensure that the indices we obtain are indeed not the same:
+Proving it formally, we as usual need to duplicate the code, as well as reason a bit about (lift_get_next f) to ensure that the indices we obtain are indeed not the same:
 
 ```Coq
   Lemma lift_get_next_monotone:
