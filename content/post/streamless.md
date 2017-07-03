@@ -6,9 +6,9 @@ description = "A small, interesting constructivist problem"
 tags = []
 categories = ["math"]
 +++
-A reddit user, /u/INL_TT, has recently proposed a few problems to be solved using your favourite proof assistant. The last one has been particularly interested:[coq-math-problems](https://coq-math-problems.github.io/Problem5/).
+A reddit user, /u/INL_TT, has recently proposed a few problems to be solved using your favourite proof assistant. The last one has been particularly interesting:[coq-math-problems](https://coq-math-problems.github.io/Problem5/).
 
-The problem is first introduced in a paper by Coquand and Spiwack[^1] investigating ways to formalise in a constructivist context the notion of finite set. A common caracterisation of a finite set A is the impossibility to inject the naturals into A. Or phrased differently, any infinite sequence of elements of A contains a duplicate. Formally, naming this caracterisation streamless:
+The problem is taken from a paper by Coquand and Spiwack[^1] investigating ways to formalise in a constructivist context the notion of finite set. A common caracterisation of a finite set A is the impossibility to inject the natural numbers into A. Or phrased differently, any stream of elements of A contains a duplicate. Formally, naming this caracterisation streamless:
 
 ```Coq
 Definition streamless (X : Set) := forall f : nat -> X,
@@ -18,7 +18,8 @@ Definition streamless (X : Set) := forall f : nat -> X,
 The problem is simply to show that the streamless property is stable under sum.
 
 ```Coq
-Theorem streamless_sum : forall X Y, streamless X -> streamless Y -> streamless (X + Y).
+Theorem streamless_sum : forall X Y, 
+    streamless X -> streamless Y -> streamless (X + Y).
 ```
 
 Let us first understand why the problem is non-trivial.
@@ -42,7 +43,8 @@ We therefore are able to build a function get_next which associates to a stream 
   Variable finite_Y: streamless Y.
 
   Program Definition get_next (f: nat -> X + Y):
-    {n: nat * nat & {z: X * Y & f (fst n) = inl (fst z) /\ f (snd n) = inr (snd z)}} +
+    {n: nat * nat & {z: X * Y & f (fst n) = inl (fst z) /\
+                                f (snd n) = inr (snd z)}} +
     {i : nat & {j : nat & i <> j /\ f i = f j}} := 
     match f 0 with
     | inl x0 =>
@@ -79,9 +81,9 @@ We therefore are able to build a function get_next which associates to a stream 
 
 The important intuition is that our oracle can therefore be used at any moment to know whether I can still find both an element of X and one of Y in my stream. We can therefore now leverage get_next in order to build a stream of pairs in X * Y, until a collision is found and we propagate this collision for the remaining indices.
 By recurrence on the index, we define the following stream g:
-  * g 0 = get_next f
-  * g (S n) = inr collision                                       if g n = inr collision \\ we keep a found collision
-  * g (S n) = let n1,n2 be the indices of (g n) in                otherwise
+  - g 0 = get_next f
+  - g (S n) = inr collision                                       if g n = inr collision \\ we keep a found collision
+  - g (S n) = let n1,n2 be the indices of (g n) in                otherwise
               let k := max(n1,n2) in                                        
               let H := get_next (fun n => f(n + k)) in                                   \\ we shift f and ask get_next
               if H = inr collision
@@ -97,7 +99,8 @@ More formally, in Coq, we obtain:
   Qed.
 
   Fixpoint lift_get_next (f: nat -> X + Y) n:
-    {n: nat * nat & {z: X * Y & f (fst n) = inl (fst z) /\ f (snd n) = inr (snd z)}} +
+    {n: nat * nat & {z: X * Y & f (fst n) = inl (fst z) /\
+                                f (snd n) = inr (snd z)}} +
     {i : nat & {j : nat & i <> j /\ f i = f j}} :=
     match n with
     | 0 => get_next f 
@@ -106,11 +109,12 @@ More formally, in Coq, we obtain:
       | inl (existT _ (n1,n2) (existT _ _ _)) =>
         match get_next (shift f (S (max n1 n2))) with
         | inl (existT _ (n1',n2') (existT _ (x,y) H)) =>
-          inl (existT _ (n1' + S (max n1 n2), n2' + S (max n1 n2)) (existT _ (x,y) H))
+          inl (existT _ (n1' + S (max n1 n2), n2' + S (max n1 n2)) 
+                        (existT _ (x,y) H))
         | inr (existT _ n1' (existT _ n2' (conj ineq eq))) => 
           inr (existT _ (n1' + S (max n1 n2))
-                      (existT _ (n2' + S (max n1 n2))
-                              (conj (helping_arith n1' n2' (S (max n1 n2)) ineq) eq)))
+                        (existT _ (n2' + S (max n1 n2))
+                         (conj (helping_arith n1' n2' (S (max n1 n2)) ineq) eq)))
         end
       | inr witness => inr witness
       end
@@ -118,10 +122,13 @@ More formally, in Coq, we obtain:
 
 ```
 
-We have built this way a new stream which only contains either collisions of the original stream, or elements of the original stream. The key difference with the first one we built is that we tagged X and Y on the same side. For any index, we either find an X and a Y, or we find a collision.
+We have built this way a new stream which only contains either collisions of the original stream, or elements of the original stream. The key difference with the first one we built is that we tagged X and Y on the same side of the sum. If we are looking say for elements of X, then for any index, we can find an X, or we find a collision.
+
 Asking once again the oracle what it has to say about the projection of (lift_get_next f) over X is enough to conclude. Indeed, once again, we can test the returned indices against the original stream. Two cases are possible:
-  * Either both indices correspond to a pair of elements in (lift_get_next f). We have found a collision.
-  * Or at least one of them is not a pair in (lift_get_next f). But then it contains a collision instead.
+
+* Either both indices correspond to a pair of elements in (lift_get_next f). We have found a collision.
+* Or at least one of them is not a pair in (lift_get_next f). But then it contains a collision instead.
+
 Qed.
 
 Proving it formally, we as usual need to duplicate the code, and reason a bit about (lift_get_next f) to ensure that the indices we obtain are indeed not the same:
@@ -214,8 +221,10 @@ Proving it formally, we as usual need to duplicate the code, and reason a bit ab
     - destruct g as [h | h] eqn:H; subst g; inversion H; clear H.
       destruct (finite_X h) as (n1 & n2 & ineq & H).
       subst h.
-      destruct (lift_get_next f n1) as [([? ?] & [? ?] & [? ?]) | collision] eqn:H1; [| exact collision].
-      destruct (lift_get_next f n2) as [([? ?] & [? ?] & [? ?]) | collision] eqn:H2; [| exact collision].
+      destruct (lift_get_next f n1) as [([? ?] & [? ?] & [? ?]) | 
+                collision] eqn:H1; [| exact collision].
+      destruct (lift_get_next f n2) as [([? ?] & [? ?] & [? ?]) | 
+                collision] eqn:H2; [| exact collision].
       unfold fst, snd in *; subst.
       exists n, n3; split; [| rewrite e,e1; reflexivity].
       refine (match (lift_get_next_somewhat_inj f n1 n2 ineq n n0 _ n3 n4 _ H1 H2)
@@ -232,6 +241,6 @@ Proving it formally, we as usual need to duplicate the code, and reason a bit ab
   Qed.
 ```
 
-Quite fun how such a simple statement can reveal itself to be quite subtle! Once again, congratulation to David for finding this proof. I did not check it against the one from the paper but would imagine them to match.
+Quite fun how such a simple statement can reveal itself to be quite subtle! Once again, congratulations to David for finding this proof. I did not check it against the one from the paper but would imagine them to match.
 
 [^1]:[Constructively finite?](http://assert-false.net/arnaud/papers/Constructively%20Finite.pdf) 
