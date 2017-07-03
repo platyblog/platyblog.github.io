@@ -36,7 +36,6 @@
        {{ partial "critical-vendor.css" | safeCSS }}
        {{ partial "critical-theme.css" | safeCSS }}
        {{ partial "critical-custom.css" | safeCSS }}
-       {{ partial "hemisu-dark.css" | safeCSS }}
       </style>
       {{ $lazylist := findRE "class=\".*?\\blazyload\\b.*?\"|class=lazyload\b" .Content }}<!-- http://regexr.com/3f9d1 -->
       {{ if ge (len $lazylist) 1 }}
@@ -50,7 +49,7 @@
            }
        };
       </script>
-      <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+      <link rel="stylesheet" href="//jmblog.github.io/color-themes-for-highlightjs/css/themes/hemisu-dark.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/coq.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
