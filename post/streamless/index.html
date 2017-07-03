@@ -4,30 +4,30 @@
     <meta name="generator" content="Hugo 0.25-DEV" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Categories | Platyblog</title>
-    <meta name="description" content="Platyblog">
+    <title>De la finitude de l&#39;être | Platyblog</title>
+    <meta name="description" content="A small, interesting constructivist problem">
     <meta name="keywords" content="math, ">
     
     
     
     
-      <meta name="robots" content="noindex">
-    
     
 
-  <meta name="author" content="">
+  <meta name="author" content="Yannick">
 
 
-    <meta property="og:title" content="Categories" />
-<meta property="og:description" content="Platyblog" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://platyblog.github.io/categories/" />
+    <meta property="og:title" content="De la finitude de l&#39;être" />
+<meta property="og:description" content="A small, interesting constructivist problem" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://platyblog.github.io/post/streamless/" />
 
 
 
-
+<meta property="article:published_time" content="2017-07-02T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2017-07-02T00:00:00&#43;00:00"/>
 
 <meta property="og:site_name" content="Platyblog" />
+
 
 
 
@@ -47,9 +47,7 @@
     
     
     
-      <link href="http://platyblog.github.io/categories/index.xml" rel="alternate" type="application/rss+xml" title="Platyblog" />
-    
-    <link rel="canonical" href="http://platyblog.github.io/categories/">
+    <link rel="canonical" href="http://platyblog.github.io/post/streamless/">
     
     
     <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
@@ -147,7 +145,7 @@ article [itemprop="description"] {
   <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
     
     
-      <a itemprop="url" class="" href="/post/"><span itemprop="name">Posts</span></a>
+      <a itemprop="url" class="active" href="/post/"><span itemprop="name">Posts</span></a>
     
       <a itemprop="url" class="" href="/"><span itemprop="name">Home</span></a>
     
@@ -156,14 +154,301 @@ article [itemprop="description"] {
 
 </header>
     <main>
-  <header>
-    <h1>Categories</h1>
-  </header>
-  <ul>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
     
-      <li><a href="math">math</a> (3)
+<meta itemprop="name" content="De la finitude de l&#39;être">
+<meta itemprop="description" content="A small, interesting constructivist problem">
+
+
+<meta itemprop="dateModified" content="2017-07-02T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2090">
+
+
+
+<meta itemprop="keywords" content="" />
+
+    <header>
+      <h1 itemprop="headline">De la finitude de l&#39;être</h1>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <circle cx="16" cy="16" r="14" />
+  <path d="M16 8 L16 16 20 20" />
+</svg>
+<span>10 minute read</span>
+<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
+</svg>
+
+  Published: <time datetime="2017-07-02T00:00:00&#43;00:00">2 Jul, 2017</time>
+
+
+      </p>
+    </header>
     
-  </ul>
+      <blockquote itemprop="description">A small, interesting constructivist problem</blockquote>
+    
+    
+
+    <div itemprop="articleBody">
+      <p>A reddit user, /u/INL_TT, has recently proposed a few problems to be solved using your favourite proof assistant. The last one has been particularly interested:<a href="https://coq-math-problems.github.io/Problem5/">coq-math-problems</a>.</p>
+
+<p>The problem is first introduced in a paper by Coquand and Spiwack<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup> investigating ways to formalise in a constructivist context the notion of finite set. A common caracterisation of a finite set A is the impossibility to inject the naturals into A. Or phrased differently, any infinite sequence of elements of A contains a duplicate. Formally, naming this caracterisation streamless:</p>
+
+<pre><code class="language-Coq">Definition streamless (X : Set) := forall f : nat -&gt; X,
+  {i : nat &amp; {j : nat &amp; i &lt;&gt; j /\ f i = f j}}.
+</code></pre>
+
+<p>The problem is simply to show that the streamless property is stable under sum.</p>
+
+<pre><code class="language-Coq">Theorem streamless_sum : forall X Y, streamless X -&gt; streamless Y -&gt; streamless (X + Y).
+</code></pre>
+
+<p>Let us first understand why the problem is non-trivial.
+Let $f: \mathbb N \rightarrow X + Y$. Classically, we obviously know that the stream $f$ contains either an infinity of elements of $X$ or an infinity of elements of $Y$, maybe of both. By extracting the corresponding substream, we should be able to conclude.</p>
+
+<p>However one cannot in general decide which of $X$ or $Y$ to chose: we therefore are seemingly unable to build neither a stream of $X$ nor a stream of $Y$, rendering our hypotheses useless.</p>
+
+<p>One could therefore ponder whether our definition of finite set can be reduced to one allowing us to only manipulate a list of values, rather than a stream. Indeed, a finite set $A$ is intuitively characterised by a finite cardinal, i.e. we can find a list of values containing any element of $A$. It however turns out that this alternative definition is strictly stronger, the streamless caracterisation does not allow us to compute the cardinal of our set.</p>
+
+<p>It feels like we cannot extract a stream of one of our types, and it feels like we cannot reduce our definition to a list: I&rsquo;ve been completely stuck! The first assertion of the previous sentence however turns out to be wrong, as David Reboullet found out and shared his proof with us. The proof goes as follows.</p>
+
+<p>Assume that $f 0 = inl x0$. While we indeed cannot directly extract a substream of X, we can create one by filling out the elements of Y by the dummy value we found, $x0$. Let us name $proj_f$ this stream.
+Now we can ask our oracle for a collision in $proj_f.$ We obtain two distinct indices $n_1,~n_2$ such that $proj_f(n_1) = proj_f(n_2)$. This may feel useless granted the collision is likely to be two occurrences of $x_0,$ but we actually do get something by looking at these indices in our original stream $f:$
+  * Either we find two elements of X: the collision was real, we won!
+  * Or we found at least one element of Y: in addition to $x_0$, we have a couple in X * Y, and their indices in $f$.
+We therefore are able to build a function get_next which associates to a stream either a pair of elements, or a collision. Formally in Coq, we simply need to duplicate the code to account whether (f 0) is in X or in Y. With sub_stream_l and sub_stream_r are the obvious projections:</p>
+
+<pre><code class="language-Coq">  Context {X Y: Set}.
+  Variable finite_X: streamless X.
+  Variable finite_Y: streamless Y.
+
+  Program Definition get_next (f: nat -&gt; X + Y):
+    {n: nat * nat &amp; {z: X * Y &amp; f (fst n) = inl (fst z) /\ f (snd n) = inr (snd z)}} +
+    {i : nat &amp; {j : nat &amp; i &lt;&gt; j /\ f i = f j}} := 
+    match f 0 with
+    | inl x0 =&gt;
+      match finite_X (sub_stream_l f x0) with
+        existT _ n1 (existT _ n2 (conj ineq collision)) =&gt;
+        match (f n1, f n2) with
+        | (inl x1, inl x2) =&gt;
+          inr (existT _ n1 (existT _ n2 (conj ineq _)))
+        | (inr y, _) =&gt; inl (existT _ (0,n1) (existT _ (x0,y) _))
+        | (_, inr y) =&gt; inl (existT _ (0,n2) (existT _ (x0,y) _))
+        end
+      end
+    | inr y0 =&gt; 
+      match finite_Y (sub_stream_r f y0) with
+        existT _ n1 (existT _ n2 (conj ineq collision)) =&gt;
+        match (f n1, f n2) with
+        | (inr y1, inr y2) =&gt; inr (existT _ n1 (existT _ n2 (conj ineq _)))
+        | (inl x, _) =&gt; inl (existT _ (n1,0) (existT _ (x,y0) _))
+        | (_, inl x) =&gt; inl (existT _ (n2,0) (existT _ (x,y0) _))
+        end
+      end
+    end.
+  Next Obligation.
+    clear Heq_anonymous1.
+    unfold sub_stream_l in collision; rewrite &lt;- H0, &lt;- H1 in collision.
+    rewrite collision; reflexivity.
+  Qed.
+  Next Obligation.
+    clear Heq_anonymous1.
+    unfold sub_stream_r in collision; rewrite &lt;- H0, &lt;- H1 in collision.
+    rewrite collision; reflexivity.
+  Qed.
+</code></pre>
+
+<p>The important intuition is that our oracle can therefore be used at any moment to know whether I can still find both an element of X and one of Y in my stream. We can therefore now leverage get_next in order to build a stream of pairs in X * Y, until a collision is found and we propagate this collision for the remaining indices.
+By recurrence on the index, we define the following stream g:
+  * g 0 = get_next f
+  * g (S n) = inr collision                                       if g n = inr collision \ we keep a found collision
+  * g (S n) = let n1,n2 be the indices of (g n) in                otherwise
+              let k := max(n1,n2) in<br />
+              let H := get_next (fun n =&gt; f(n + k)) in                                   \ we shift f and ask get_next
+              if H = inr collision
+              then inr collision
+              else let n1&rsquo;,n2&rsquo; be the indices of H in
+                  n1&rsquo; + max (n1,n2), n2&rsquo; + max(n1,n2)</p>
+
+<p>More formally, in Coq, we obtain:</p>
+
+<pre><code class="language-Coq">  Lemma helping_arith: forall n m p, n &lt;&gt; m -&gt; n + p &lt;&gt; m + p.
+      intros; omega.
+  Qed.
+
+  Fixpoint lift_get_next (f: nat -&gt; X + Y) n:
+    {n: nat * nat &amp; {z: X * Y &amp; f (fst n) = inl (fst z) /\ f (snd n) = inr (snd z)}} +
+    {i : nat &amp; {j : nat &amp; i &lt;&gt; j /\ f i = f j}} :=
+    match n with
+    | 0 =&gt; get_next f 
+    | S m =&gt;
+      match lift_get_next f m with
+      | inl (existT _ (n1,n2) (existT _ _ _)) =&gt;
+        match get_next (shift f (S (max n1 n2))) with
+        | inl (existT _ (n1',n2') (existT _ (x,y) H)) =&gt;
+          inl (existT _ (n1' + S (max n1 n2), n2' + S (max n1 n2)) (existT _ (x,y) H))
+        | inr (existT _ n1' (existT _ n2' (conj ineq eq))) =&gt; 
+          inr (existT _ (n1' + S (max n1 n2))
+                      (existT _ (n2' + S (max n1 n2))
+                              (conj (helping_arith n1' n2' (S (max n1 n2)) ineq) eq)))
+        end
+      | inr witness =&gt; inr witness
+      end
+    end.
+
+</code></pre>
+
+<p>We have built this way a new stream which only contains either collisions of the original stream, or elements of the original stream. The key difference with the first one we built is that we tagged X and Y on the same side. For any index, we either find an X and a Y, or we find a collision.
+Asking once again the oracle what it has to say about the projection of (lift_get_next f) over X is enough to conclude. Indeed, once again, we can test the returned indices against the original stream. Two cases are possible:
+  * Either both indices correspond to a pair of elements in (lift_get_next f). We have found a collision.
+  * Or at least one of them is not a pair in (lift_get_next f). But then it contains a collision instead.
+Qed.</p>
+
+<p>Proving it formally, we as usual need to duplicate the code, and reason a bit about (lift_get_next f) to ensure that the indices we obtain are indeed not the same:</p>
+
+<pre><code class="language-Coq">  Lemma lift_get_next_monotone:
+    forall f n n1 n2 H1 m1 m2 H2,
+      (lift_get_next f n = inl (existT _ (n1,n2) H1)) -&gt;
+      (lift_get_next f (S n) = inl (existT _ (m1,m2) H2)) -&gt;
+      n1 &lt; m1 /\ n2 &lt; m2.
+  Proof.
+    intros; cbn in H0.
+    rewrite H in H0.
+    destruct H1 as ([x1 y1] &amp; eq1 &amp; eq1').
+    destruct H2 as ([x2 y2] &amp; eq2 &amp; eq2').
+    cbn in *.
+    destruct (get_next (shift f (S (max n1 n2)))) eqn:eq;
+        [| destruct s as (i &amp; j &amp; ineq &amp; ?); inversion H0].
+    destruct s as ([i j] &amp; [x y] &amp; Eq &amp; Eq').
+    inversion H0; clear H0.
+    subst; cbn in *.
+    split; rewrite Nat.add_comm; apply lt_plus_trans; unfold lt; apply le_n_S.
+    apply Max.le_max_l.
+    apply Max.le_max_r.
+  Qed.
+
+  Lemma lift_get_next_monotone_strong:
+    forall f d n m (eqd: d = m - n) (lt: n &lt; m) n1 n2 H1 m1 m2 H2,
+      (lift_get_next f n = inl (existT _ (n1,n2) H1)) -&gt;
+      (lift_get_next f m = inl (existT _ (m1,m2) H2)) -&gt;
+      n1 &lt; m1 /\ n2 &lt; m2.
+  Proof.
+    intros.
+    generalize dependent m; revert m1 m2 H2.
+    induction d as [| d IH]; intros; [omega |].
+    cbn in *.
+    destruct d as [| d].
+    - clear IH.
+      assert (m = S n) by omega; subst m.
+      eapply lift_get_next_monotone; eauto. 
+    - destruct m as [| m]; [omega |].
+      assert (eqd': S d = m - n) by omega; clear eqd.
+      generalize H0; intros Hyp; cbn in H0.
+      destruct (lift_get_next f m) eqn:eq; [| inversion H0].
+      destruct s as ([i j] &amp; [x y] &amp; Eq &amp; Eq').
+      destruct (get_next (shift f (S (max i j)))) eqn:eq';
+        [| destruct s as (? &amp; ? &amp; ineq &amp; ?); inversion H0].
+      destruct s as ([i' j'] &amp; [x' y'] &amp; Eq'' &amp; Eq''').
+      inversion H0; clear H0.
+      subst; unfold fst, snd in *.
+      destruct lift_get_next_monotone with (1 := eq) (2 := Hyp).
+      eapply IH in eq; eauto; [| omega]; clear IH; destruct eq as [ineq1 ineq2].
+      clear Hyp eq' H.
+      split; omega.
+  Qed.
+      
+  Lemma lift_get_next_somewhat_inj:
+    forall f n m (ineq: n &lt;&gt; m) n1 n2 H1 m1 m2 H2,
+      (lift_get_next f n = inl (existT _ (n1,n2) H1)) -&gt;
+      (lift_get_next f m = inl (existT _ (m1,m2) H2)) -&gt;
+      n1 &lt;&gt; m1 /\ n2 &lt;&gt; m2.
+  Proof.
+    intros f n m ineq; intros.
+    destruct (lt_eq_lt_dec n m) as [[? | ?] | ?].
+    edestruct lift_get_next_monotone_strong; eauto; omega.
+    omega.
+    edestruct lift_get_next_monotone_strong; eauto; omega.
+  Qed.
+
+  (* We project lift_get_next *)
+  Definition proj_lift_get_next (f: nat -&gt; X + Y): (nat -&gt; X) + (nat -&gt; Y) :=
+    match f 0 with
+    | inl x0 =&gt; inl (fun n =&gt;
+                      match lift_get_next f n with
+                      | inl (existT _ _ (existT _ (x,_) _)) =&gt; x
+                      | inr _ =&gt; x0
+                      end)
+    | inr y0 =&gt; inr (fun n =&gt;
+                      match lift_get_next f n with
+                      | inl (existT _ _ (existT _ (_,y) _)) =&gt; y
+                      | inr _ =&gt; y0
+                      end)
+    end.                   
+
+  Theorem streamless_sum : streamless (X + Y).
+  Proof.
+    intros f.
+    set (g := proj_lift_get_next f); unfold proj_lift_get_next in g.
+    destruct (f 0) as [x0 | y0].
+    - destruct g as [h | h] eqn:H; subst g; inversion H; clear H.
+      destruct (finite_X h) as (n1 &amp; n2 &amp; ineq &amp; H).
+      subst h.
+      destruct (lift_get_next f n1) as [([? ?] &amp; [? ?] &amp; [? ?]) | collision] eqn:H1; [| exact collision].
+      destruct (lift_get_next f n2) as [([? ?] &amp; [? ?] &amp; [? ?]) | collision] eqn:H2; [| exact collision].
+      unfold fst, snd in *; subst.
+      exists n, n3; split; [| rewrite e,e1; reflexivity].
+      refine (match (lift_get_next_somewhat_inj f n1 n2 ineq n n0 _ n3 n4 _ H1 H2)
+              with conj X _ =&gt; X end). 
+    - destruct g as [h | h] eqn:H; subst g; inversion H; clear H.
+      destruct (finite_Y h) as (n1 &amp; n2 &amp; ineq &amp; H).
+      subst h.
+      destruct (lift_get_next f n1) as [([? ?] &amp; [? ?] &amp; [? ?]) | collision] eqn:H1; [| exact collision].
+      destruct (lift_get_next f n2) as [([? ?] &amp; [? ?] &amp; [? ?]) | collision] eqn:H2; [| exact collision].
+      unfold fst, snd in *; subst.
+      exists n0, n4; split; [| rewrite e0,e2; reflexivity].
+      refine (match (lift_get_next_somewhat_inj f n1 n2 ineq n n0 _ n3 n4 _ H1 H2)
+              with conj _ X =&gt; X end). 
+  Qed.
+</code></pre>
+
+<p>Quite fun how such a simple statement can reveal itself to be quite subtle! Once again, congratulation to David for finding this proof. I did not check it against the one from the paper but would imagine them to match.</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1"><a href="http://assert-false.net/arnaud/papers/Constructively%20Finite.pdf">Constructively finite?</a>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+    </div>
+    
+    <footer>
+      <hr>
+      <p>
+  Published
+  
+    
+      by <span itemprop="author">Yannick</span>
+    
+  
+  <time datetime="2017-07-02T00:00:00&#43;00:00">
+    2 Jul, 2017
+  </time>
+  
+    in <span itemprop="articleSection"><a href="/categories/math/">math</a></span>
+  
+  
+  using <span itemprop="wordCount">2090</span> words.
+</p>
+
+      
+
+
+
+    </footer>
+  </article>
 </main>
     <footer>
   
