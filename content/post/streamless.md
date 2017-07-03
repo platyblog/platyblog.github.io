@@ -85,6 +85,7 @@ We therefore are able to build a function get_next which associates to a stream 
 ```
 
 The important intuition is that our oracle can therefore be used at any moment to know whether I can still find both an element of X and one of Y in my stream. We can therefore now leverage get_next in order to build a stream of pairs in X * Y, until a collision is found and we propagate this collision for the remaining indices.
+
 By recurrence on the index, we define the following stream g:
 
 ```
