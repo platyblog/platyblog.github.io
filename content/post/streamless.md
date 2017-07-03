@@ -252,6 +252,8 @@ Proving it formally, we as usual need to duplicate the code, as well as reason a
   Qed.
 ```
 
+The Coq proof in one piece can be [found here](./streamless.v).
+
 Quite fun how such a simple statement can reveal itself to be quite subtle! Once again, congratulations to David for finding this proof. I did not check it against the one from the paper but would imagine them to match.
 
 [^1]:[Constructively finite?](http://assert-false.net/arnaud/papers/Constructively%20Finite.pdf) 
