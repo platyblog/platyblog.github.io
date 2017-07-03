@@ -267,8 +267,9 @@ article [itemprop="description"] {
   Qed.
 </code></pre>
 
-<p>The important intuition is that our oracle can therefore be used at any moment to know whether I can still find both an element of X and one of Y in my stream. We can therefore now leverage get_next in order to build a stream of pairs in X * Y, until a collision is found and we propagate this collision for the remaining indices.
-By recurrence on the index, we define the following stream g:</p>
+<p>The important intuition is that our oracle can therefore be used at any moment to know whether I can still find both an element of X and one of Y in my stream. We can therefore now leverage get_next in order to build a stream of pairs in X * Y, until a collision is found and we propagate this collision for the remaining indices.</p>
+
+<p>By recurrence on the index, we define the following stream g:</p>
 
 <pre><code> g 0 = get_next f
 
