@@ -32,26 +32,29 @@
       <link rel="next" href="{{ .Params.next }}">
     {{ end }}
     {{ partial "favicon.html" . }}
-      <style>
-       {{ partial "critical-vendor.css" | safeCSS }}
-       {{ partial "critical-theme.css" | safeCSS }}
-       {{ partial "critical-custom.css" | safeCSS }}
-      </style>
-      {{ $lazylist := findRE "class=\".*?\\blazyload\\b.*?\"|class=lazyload\b" .Content }}<!-- http://regexr.com/3f9d1 -->
-      {{ if ge (len $lazylist) 1 }}
-      <script async src="/js/lazysizes.min.js"></script>
-      {{ end }}
-      <script type="text/javascript">
-       window.MathJax = {
-           tex2jax: {
-               inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-               processEscapes: true
-           }
-       };
-      </script>
-      <link rel="stylesheet" href="//jmblog.github.io/color-themes-for-highlightjs/css/themes/hemisu-dark.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/languages/coq.min.js"></script>
+    <style>
+      {{ partial "critical-vendor.css" | safeCSS }}
+      {{ partial "critical-theme.css" | safeCSS }}
+      {{ partial "critical-custom.css" | safeCSS }}
+    </style>
+    {{ $lazylist := findRE "class=\".*?\\blazyload\\b.*?\"|class=lazyload\b" .Content }}<!-- http://regexr.com/3f9d1 -->
+    {{ if ge (len $lazylist) 1 }}
+    <script async src="/js/lazysizes.min.js"></script>
+    {{ end }}
+    <script type="text/javascript">
+     window.MathJax = {
+         tex2jax: {
+             inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+             processEscapes: true
+         }
+     };
+    </script>
+    <script type="text/javascript"
+            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/qtcreator_dark.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/coq.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
   </head>
   {{ $theme_variant := .Site.Params.theme_variant | default "hack dark" }}
