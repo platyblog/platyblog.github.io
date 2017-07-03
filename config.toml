@@ -1,7 +1,7 @@
 baseurl = "http://platyblog.github.io/"
 languageCode = "en-us"
 title = "Platyblog"
-theme = "after-dark"
+theme = "after-dark2"
 paginate = 5
 
 enableRobotsTXT = true # Suggested, enable robots.txt file
