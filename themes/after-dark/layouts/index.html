@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
-  <head>
-    {{ .Hugo.Generator }}
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Site.Title }}</title>
-    <meta name="description" content="{{ .Site.Params.description }}">
-    {{ partial "site-verification" . }}
-    {{ if .RSSLink }}
-      <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
-    {{ end }}
-    <link rel="canonical" href="{{ .Permalink }}">
-    {{ partial "favicon" . }}
-    {{ partial "critical-vendor.css" . }}
-    {{ partial "critical-custom.css" . }}
-<script type="text/javascript">
-  window.MathJax = {
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  };
-</script>
-<script type="text/javascript"
-  src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
-  </head>
-  <body class="hack dark main container">
-    <header>
-      {{ partial "menu" . }}
-    </header>
-    <main>
-      <h1>{{ .Title }}</h1>
-      {{ range (.Paginate (where .Data.Pages "Type" "post")).Pages }}
-        <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+    <head>
+        {{ .Hugo.Generator }}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ .Site.Title }}</title>
+        <meta name="description" content="{{ .Site.Params.description }}">
+        {{ partial "site-verification" . }}
+        {{ if .RSSLink }}
+        <link href="{{ .RSSLink }}" rel="alternate" type="application/rss+xml" title="{{ .Site.Title }}" />
+        {{ end }}
+        <link rel="canonical" href="{{ .Permalink }}">
+        {{ partial "favicon" . }}
+        {{ partial "critical-vendor.css" . }}
+        {{ partial "critical-custom.css" . }}
+        <script type="text/javascript">
+         window.MathJax = {
+             tex2jax: {
+                 inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+                 processEscapes: true
+             }
+         };
+        </script>
+        <script type="text/javascript"
+                src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+        </script>
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/styles/default.min.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+    </head>
+    <body class="hack dark main container">
+        <header>
+            {{ partial "menu" . }}
+        </header>
+        <main>
+            <h1>{{ .Title }}</h1>
+            {{ range (.Paginate (where .Data.Pages "Type" "post")).Pages }}
+            <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
         <p>{{ .Summary }}</p>
       {{ end }}
     </main>
