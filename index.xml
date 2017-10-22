@@ -22,6 +22,17 @@ The problem is taken from a paper by Coquand and Spiwack1 investigating ways to 
     </item>
     
     <item>
+      <title>To depend or not to depend</title>
+      <link>http://platyblog.github.io/post/gralina/</link>
+      <pubDate>Sun, 02 Jul 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://platyblog.github.io/post/gralina/</guid>
+      <description>Vincent recently pointed us to an introduction1 to a quite sexy recent mathematical theory: Graphical Linear Algebra (GLA). We discuss in this blog post the use of dependent types to formalise this theory, following attempts conducted with Pierre.
+#2 Graphical Linear Algebra
+The theory of linear algebra is part of the compulsory credentials of any undergrad in mathematics, and crept into numerous scientific fields. Everywhere, the story follows the same (very) rough framework (overlooking the question of the underlying field and so-on).</description>
+    </item>
+    
+    <item>
       <title>$\mathbb{N}\rightarrow\mathbb{B}$ is a searchable set</title>
       <link>http://platyblog.github.io/post/searchable-set/</link>
       <pubDate>Wed, 01 Feb 2017 00:00:00 +0000</pubDate>

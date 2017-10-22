@@ -4,30 +4,31 @@
     <meta name="generator" content="Hugo 0.31-DEV" />
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Math | Platyblog</title>
-    <meta name="description" content="Platyblog">
+    <title>To depend or not to depend | Platyblog</title>
+    <meta name="description" content="Investigating the use of dependent types to formalise Graphical Linear Algebra">
     <meta name="keywords" content="coq, math, ">
     
     
     
     
-      <meta name="robots" content="noindex">
-    
     
 
-  <meta name="author" content="">
+  <meta name="author" content="Yannick Zakowski">
 
 
-    <meta property="og:title" content="Math" />
-<meta property="og:description" content="Platyblog" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://platyblog.github.io/categories/math/" />
+    <meta property="og:title" content="To depend or not to depend" />
+<meta property="og:description" content="Investigating the use of dependent types to formalise Graphical Linear Algebra" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://platyblog.github.io/post/gralina/" />
 
 
 
-<meta property="og:updated_time" content="2017-07-02T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2017-07-02T00:00:00&#43;00:00"/>
+
+<meta property="article:modified_time" content="2017-07-02T00:00:00&#43;00:00"/>
 
 <meta property="og:site_name" content="Platyblog" />
+
 
 
 
@@ -47,9 +48,7 @@
     
     
     
-      <link href="http://platyblog.github.io/categories/math/index.xml" rel="alternate" type="application/rss+xml" title="Platyblog" />
-    
-    <link rel="canonical" href="http://platyblog.github.io/categories/math/">
+    <link rel="canonical" href="http://platyblog.github.io/post/gralina/">
     
     
     <link rel="icon" sizes="any" href="data:image/svg+xml,%3Csvg%20viewBox='0%200%2046%2045'%20xmlns='http://www.w3.org/2000/svg'%3E%3Ctitle%3EAfter%20Dark%3C/title%3E%3Cpath%20d='M.708%2045L23%20.416%2045.292%2045H.708zM35%2038L23%2019%2011%2038h24z'%20fill='%23000'/%3E%3C/svg%3E">
@@ -147,7 +146,7 @@ article [itemprop="description"] {
   <nav itemscope itemtype="http://schema.org/SiteNavigationElement">
     
     
-      <a itemprop="url" class="" href="/post/"><span itemprop="name">Posts</span></a>
+      <a itemprop="url" class="active" href="/post/"><span itemprop="name">Posts</span></a>
     
       <a itemprop="url" class="" href="/"><span itemprop="name">Home</span></a>
     
@@ -156,94 +155,103 @@ article [itemprop="description"] {
 
 </header>
     <main>
-  <header>
-    <h1>Math</h1>
-  </header>
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/streamless/">De la finitude de l&#39;être</a>
-    </h2>
+  <article itemscope itemtype="http://schema.org/BlogPosting">
     
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
+<meta itemprop="name" content="To depend or not to depend">
+<meta itemprop="description" content="Investigating the use of dependent types to formalise Graphical Linear Algebra">
+
+
+<meta itemprop="datePublished" content="2017-07-02T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-07-02T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="336">
+
+
+
+<meta itemprop="keywords" content="" />
+
+    <header>
+      <h1 itemprop="headline">To depend or not to depend</h1>
+      <p class="muted">
+        <svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
-<span>10 minute read</span>
+<span>2 minute read</span>
 <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
 
   Published: <time datetime="2017-07-02T00:00:00&#43;00:00">2 Jul, 2017</time>
 
+
+      </p>
+    </header>
+    
+      <blockquote itemprop="description">Investigating the use of dependent types to formalise Graphical Linear Algebra</blockquote>
+    
+    
+
+    <div itemprop="articleBody">
+      <p>Vincent recently pointed us to an introduction<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup> to a quite sexy recent mathematical theory: <em>Graphical Linear Algebra</em> (GLA).
+We discuss in this blog post the use of dependent types to formalise this theory, following attempts conducted with Pierre.</p>
+
+<p>#2 Graphical Linear Algebra</p>
+
+<p>The theory of linear algebra is part of the compulsory credentials of any undergrad in mathematics, and crept into numerous scientific fields. Everywhere, the story follows the same (very) rough framework (overlooking the question of the underlying field and so-on).
+..* Define vector spaces;
+..* define morphisms between those spaces, which turn to be linear mappings;
+..* notice that there is a 1-to-1 mapping relating linear transformations and matrices.
+Hence, matrices constitute the <em>language</em> of linear algebra. Mathematicians, quite satisfied with this language, have used it to explore the <em>theory</em> of linear algebra with the great success that we know of.
+Graphical linear algebra offers <em>another language</em> to describe <em>the same theory</em>. The intent is to provide a different intuition about the field, an approach which proved fruitful during the 20th to discover new results in many fields. We will not cover the link between the language of GLA and linear algebra in this post, but rather take it for granted, and ponder the best way to formalise it in Coq.</p>
+
+<p>#2 The language</p>
+
+<p>An element of GLA is a <em>diagram</em>, a series of boxes aligned horizontally and connected by wires. The language is made of three kinds of components.
+..* Generators, <em>i.e.</em> elementary diagrams. Those are the basic blocks.
+..* Combinators, <em>i.e.</em> operations allowing to build diagrams out of simpler ones.
+..* Equations, <em>i.e.</em> rules identifying diagrams which are built differently, but should be thought of as equivalent.
+For instance, the simplest diagram is a straight wire, denoted here by &ldquo;&ndash;&rdquo;. It has exactly one incoming and one outing wires, and one can think of it as the identity from F¹ to F¹.
+As a first approximation, GLA can be described by the following BNF:
+&gt; GLA := \emptyset | ∅</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1"><a href="https://graphicallinearalgebra.net/">https://graphicallinearalgebra.net/</a>
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+    </div>
+    
+    <footer>
+      <hr>
+      <p>
+  Published
+  
+    
+      by <span itemprop="author">Yannick Zakowski</span>
+    
+  
+  <time datetime="2017-07-02T00:00:00&#43;00:00">
+    2 Jul, 2017
+  </time>
+  
+    in <span itemprop="articleSection"><a href="/categories/coq/">Coq</a></span>
+  
+  
+  using <span itemprop="wordCount">336</span> words.
 </p>
-    
-  </header>
-  
-    <blockquote itemprop="headline">A small, interesting constructivist problem</blockquote>
-  
-  <div itemprop="description">
-    A reddit user, /u/INL_TT, has recently proposed a few problems to be solved using your favourite proof assistant. The last one has been particularly interesting: coq-math-problems.
-The problem is taken from a paper by Coquand and Spiwack1 investigating ways to formalise in a constructivist context the notion of finite set. A common characterisation of a finite set A is the impossibility to inject the natural numbers into A. Or phrased differently, any stream of elements of A contains a duplicate.
-  </div>
-  
-    <p><a itemprop="url" href="/post/streamless/">Read More&nbsp;&raquo;</a></p>
-  
-  <meta itemprop="inLanguage" content="en-us">
-  <meta itemprop="datePublished" content="2017-07-02T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="2017-07-02T00:00:00&#43;00:00">
-  
-</article>
 
-  
-    <article itemscope itemtype="http://schema.org/CreativeWork">
-  <header>
-    <h2 itemprop="name">
-      <a href="/post/searchable-set/">$\mathbb{N}\rightarrow\mathbb{B}$ is a searchable set</a>
-    </h2>
-    
-      <p class="muted"><svg style="margin-bottom:-3px" class="i-clock" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <circle cx="16" cy="16" r="14" />
-  <path d="M16 8 L16 16 20 20" />
-</svg>
-<span>3 minute read</span>
-<svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
-  <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
-</svg>
+      
 
-  Published: <time datetime="2017-02-01T00:00:00&#43;00:00">1 Feb, 2017</time>
 
-</p>
-    
-  </header>
-  
-    <blockquote itemprop="headline">First post ever</blockquote>
-  
-  <div itemprop="description">
-    I never quite understood why all the crazy magic in this post actually works, nor did I manage to grok Escardo&rsquo;s paper. But I will try to write what I understood so far.
-Escardo shows that the Cantor space ($\mathbb{N}\rightarrow\mathbb{B}$ where $\mathbb{B}$ is the set of booleans) admits exhaustive search, meaning that for any total predicate $\varphi$, it is possible to find a witness $w$ such that $\varphi(w)$ is true or show that such a witness doesn&rsquo;t exist in finite time.
-  </div>
-  
-    <p><a itemprop="url" href="/post/searchable-set/">Read More&nbsp;&raquo;</a></p>
-  
-  <meta itemprop="inLanguage" content="en-us">
-  <meta itemprop="datePublished" content="2017-02-01T00:00:00&#43;00:00">
-  <meta itemprop="dateModified" content="2017-02-01T00:00:00&#43;00:00">
-  
-</article>
 
-  
+    </footer>
+  </article>
 </main>
     <footer>
-  <nav>
-  <p>
-    
-    <span>Page 1 of 1</span>
-    
-  </p>
-</nav>
-
   
 
 </footer>
