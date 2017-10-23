@@ -23,9 +23,9 @@
 
 
 
-<meta property="article:published_time" content="2017-07-02T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2017-10-23T00:00:00&#43;00:00"/>
 
-<meta property="article:modified_time" content="2017-07-02T00:00:00&#43;00:00"/>
+<meta property="article:modified_time" content="2017-10-23T00:00:00&#43;00:00"/>
 
 <meta property="og:site_name" content="Platyblog" />
 
@@ -163,9 +163,9 @@ article [itemprop="description"] {
 <meta itemprop="description" content="Investigating the use of dependent types to formalise Graphical Linear Algebra">
 
 
-<meta itemprop="datePublished" content="2017-07-02T00:00:00&#43;00:00" />
-<meta itemprop="dateModified" content="2017-07-02T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="336">
+<meta itemprop="datePublished" content="2017-10-23T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2017-10-23T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1091">
 
 
 
@@ -178,12 +178,12 @@ article [itemprop="description"] {
   <circle cx="16" cy="16" r="14" />
   <path d="M16 8 L16 16 20 20" />
 </svg>
-<span>2 minute read</span>
+<span>6 minute read</span>
 <svg style="margin-bottom: -3px" class="i-edit" viewBox="0 0 32 32" width="16" height="16" fill="none" stroke="currentcolor" stroke-linecap="round" stroke-linejoin="round" stroke-width="6.25%">
   <path d="M30 7 L25 2 5 22 3 29 10 27 Z M21 6 L26 11 Z M5 22 L10 27 Z" />
 </svg>
 
-  Published: <time datetime="2017-07-02T00:00:00&#43;00:00">2 Jul, 2017</time>
+  Published: <time datetime="2017-10-23T00:00:00&#43;00:00">23 Oct, 2017</time>
 
 
       </p>
@@ -194,27 +194,142 @@ article [itemprop="description"] {
     
 
     <div itemprop="articleBody">
-      <p>Vincent recently pointed us to an introduction<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup> to a quite sexy recent mathematical theory: <em>Graphical Linear Algebra</em> (GLA).
+      
+
+<p>Vincent recently pointed us to an introduction<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup> to a quite sexy recent mathematical theory: <em>Graphical Linear Algebra</em> (GLA).
 We discuss in this blog post the use of dependent types to formalise this theory, following attempts conducted with Pierre.</p>
 
-<p>#2 Graphical Linear Algebra</p>
+<h1 id="graphical-linear-algebra">Graphical Linear Algebra</h1>
 
-<p>The theory of linear algebra is part of the compulsory credentials of any undergrad in mathematics, and crept into numerous scientific fields. Everywhere, the story follows the same (very) rough framework (overlooking the question of the underlying field and so-on).
-..* Define vector spaces;
-..* define morphisms between those spaces, which turn to be linear mappings;
-..* notice that there is a 1-to-1 mapping relating linear transformations and matrices.
-Hence, matrices constitute the <em>language</em> of linear algebra. Mathematicians, quite satisfied with this language, have used it to explore the <em>theory</em> of linear algebra with the great success that we know of.
+<p>The theory of linear algebra is part of the compulsory credentials of any undergrad in mathematics, and crept into numerous scientific fields. Everywhere, the story follows the same (very) rough framework (overlooking the question of the underlying field and so-on).</p>
+
+<ol>
+<li><p>Define vector spaces;</p></li>
+
+<li><p>define morphisms between those spaces, which turn to be linear mappings;</p></li>
+
+<li><p>notice that there is a 1-to-1 mapping relating linear transformations and matrices.</p></li>
+</ol>
+
+<p>Hence, matrices constitute the <em>language</em> of linear algebra. Mathematicians, quite satisfied with this language, have used it to explore the <em>theory</em> of linear algebra with the great success that we know of.
 Graphical linear algebra offers <em>another language</em> to describe <em>the same theory</em>. The intent is to provide a different intuition about the field, an approach which proved fruitful during the 20th to discover new results in many fields. We will not cover the link between the language of GLA and linear algebra in this post, but rather take it for granted, and ponder the best way to formalise it in Coq.</p>
 
-<p>#2 The language</p>
+<h1 id="the-language">The language</h1>
 
-<p>An element of GLA is a <em>diagram</em>, a series of boxes aligned horizontally and connected by wires. The language is made of three kinds of components.
-..* Generators, <em>i.e.</em> elementary diagrams. Those are the basic blocks.
-..* Combinators, <em>i.e.</em> operations allowing to build diagrams out of simpler ones.
-..* Equations, <em>i.e.</em> rules identifying diagrams which are built differently, but should be thought of as equivalent.
-For instance, the simplest diagram is a straight wire, denoted here by &ldquo;&ndash;&rdquo;. It has exactly one incoming and one outing wires, and one can think of it as the identity from F¹ to F¹.
-As a first approximation, GLA can be described by the following BNF:
-&gt; GLA := \emptyset | ∅</p>
+<p>We briefly cover the language of GLA. However, the problem this blog post is concerned with is essentially independent from GLA in particular, and even more so from linear algebra. If you already know GLA or do not care about it, this section can be soundly skipped.</p>
+
+<p>An element of GLA is a <em>diagram</em>, a series of boxes aligned horizontally and connected by wires. It can be thought of as a circuit, taking inputs at its left handside, and processing them from left to right, resulting in outputs. It naturally is meant to be represented and manipulated graphically, we shall do our best to remain readable in a purely textual form. The language is made of three kinds of components.</p>
+
+<ul>
+<li><p>Generators, <em>i.e.</em> elementary diagrams. Those are the basic blocks.</p></li>
+
+<li><p>Combinators, <em>i.e.</em> operations allowing to build diagrams out of simpler ones.</p></li>
+
+<li><p>Equations, <em>i.e.</em> rules identifying diagrams which are built differently, but should be thought of as equivalent.</p></li>
+</ul>
+
+<h3 id="the-generators">The generators</h3>
+
+<p>We detail briefly the basic blocks of the language, using wonders of ASCII art and a tidbit of imagination:</p>
+
+<ul>
+<li><p>$∅$ is the empty diagram. Nothing comes in, nothing comes out.</p></li>
+
+<li><p>$&ndash;$ is a simple wire. One input, one output: it can be thought of as the identity from F¹ to F¹.</p></li>
+
+<li><p>$∘-$ has no input, but one output: it is a constant! Let&rsquo;s call it <em>zero</em> suggestively.</p></li>
+
+<li><p>$-∘$ is the symmetric of zero: it is a dead-en! It <em>discards</em> its input.</p></li>
+
+<li><p>$-&lt;$ is the <em>duplicate</em> diagram. Takes one input, returns two which should be interpreted as two copies.</p></li>
+
+<li><p>$&gt;-$ is the <em>addition</em> diagram. Symmetric to the previous one, can be interpreted as resulting the sum of two inputs.</p></li>
+
+<li><p>$&gt;&lt;$ is a bit weirder. It simply takes two inputs, and twists these entries to return them in the reversed order.</p></li>
+</ul>
+
+<h3 id="the-combinators">The combinators</h3>
+
+<p>All those are basic, atomic, diagrams. Remains to combine them in order to build greater glorious diagrams. If we think about them graphically, two natural ways come to mind: pile them up, or chain them horizontally.</p>
+
+<ul>
+<li><p>$G₁ ⊕ G₂$ is the diagram resulting from putting $G$₁ on top of $G$₂. The resulting diagram can be thought of as two circuits working in parallel with no interaction.</p></li>
+
+<li><p>$G₁ ∘ G₂$ connects $G$₂ on the right of $G$₁. Here begins our sufferings: we do not want no dangling wires! This operation can only be performed if the number of wires getting out of $G$₁ is exactly equal to the number of wires getting in $G$₂ (not unlike a certain condition over the product of matrices&hellip;). This condition shall be the main focus of our attention once we get to the formalisation.</p></li>
+</ul>
+
+<h3 id="the-equations">The equations</h3>
+
+<p>Armed with our set of generators and our two combinators, we can span a whole family of diagrams.</p>
+
+<p>However, a lot of them look awfully alike! We probably do not want to differentiate based on the order in which we built our diagrams. $(G₁ ⊕ G₂) ⊕ G₃$ should be the same as $G₁ ⊕ (G₂ ⊕ G₃)$ for instance.</p>
+
+<p>But more fundamentally, we claim that we are designing a language to exactly represent linear algebra. We therefore better axiomatise it somewhere.
+For instance, we hinted that $&ndash;$ really is nothing but the identity. So should $G ∘ &ndash;$ and $&ndash; ∘ G$ really be any different from $G$?</p>
+
+<p>The following set of equations wraps up everything we need to get started.</p>
+
+<ul>
+<li><p>Three rules to axiomatise the addition.</p>
+
+<ul>
+<li>$&gt;&lt; ∘ &gt;- == &gt;-$                     (commutativity)</li>
+<li>$(&ndash; ⊕ &gt;-) ∘ &gt;- == (&gt;- ⊕ &ndash;) ∘ &gt;-$  (associativity)</li>
+<li>$&ndash; == (o- ⊕ &ndash;) ∘ &gt;-$              (zero is neutral)</li>
+</ul></li>
+
+<li><p>Three rules to axiomatise the copy.</p>
+
+<ul>
+<li>$-&lt; == -&lt; ∘ &gt;&lt;$                     (commutativity)</li>
+<li>$-&lt; ∘ (-&lt; ⊕ &ndash;) == -&lt; ∘ (&ndash;  ⊕ -&lt;)$ (associativity)</li>
+<li>$-&lt; ∘ (-o ⊕ &ndash;) == &ndash;$              (discard is neutral)</li>
+</ul></li>
+
+<li><p>Four rules to axiomatise their interaction.</p>
+
+<ul>
+<li>$&gt;- ∘ -&lt; == (-&lt; ⊕ -&lt;) ∘ (&ndash; ⊕ &gt;&lt; ⊕ &ndash;) ∘ (&gt;- ⊕ &gt;-)$</li>
+<li>$&gt;- ∘ -o == -o ⊕ -o$</li>
+<li>$o- ∘ -&lt; == o- ⊕~ o-$</li>
+<li>$o- ∘ -o == ∅$</li>
+</ul></li>
+
+<li><p>Axiomatisation of the identities. -n- denotes n wires piled up one onto each other.</p>
+
+<ul>
+<li>$-n- ∘ G == G == G ∘ -n-$</li>
+<li>$∅ ⊕ G  == G == G ⊕ ∅$</li>
+</ul></li>
+
+<li><p>The order in which one we build a diagram does not matter</p>
+
+<ul>
+<li>$G₁ ∘ (G₂ ∘ G₃) == (G₁ ∘ G₂) ∘ G₃$                (associativity of $∘$)</li>
+<li>$G₁ ⊕~ (G₂ ⊕~ G₃) == (G₁ ⊕~ G₂) ⊕~ G₃$         (associativity of $⊕$)</li>
+<li>$(G₁ ⊕ G₃) ∘ (G₂ ⊕ G₄) == (G₁ ∘ G₂) ⊕ (G₃ ∘ G₄)$</li>
+</ul></li>
+
+<li><p>These rules should be compositional: if two sub-diagrams are equivalent, substituting one for the other in the bigger diagram should lead to equivalent diagrams. We obtain this by stating that == is a congruence closure for both $∘$ and $⊕$.</p>
+
+<ul>
+<li>$G₁ == G₁&rsquo; -&gt; G₂ == G₂&rsquo; -&gt; G₁ ∘ G₂ == G₁&rsquo; ∘ G₂&rsquo; $</li>
+<li>$G₁ == G₁&rsquo; -&gt; G₂ == G₂&rsquo; -&gt; G₁ ⊕ G₂ == G₁&rsquo; ⊕ G₂&rsquo;$
+<br /></li>
+</ul></li>
+
+<li><p>Finally, we take the reflexive, transitive and symmetric closure of the relation.</p>
+
+<ul>
+<li>$G == G$</li>
+<li>$G₁ == G₂ -&gt; G₂ == G₁$</li>
+<li>$G₁ == G₂ -&gt; G₂ == G₃ -&gt; G₁ == G₃$</li>
+</ul></li>
+</ul>
+
+<h1 id="formalising-gla-in-coq">Formalising GLA in Coq</h1>
+
+<p><em>In progress, to consider a small subset and illustrate the biniou</em></p>
 <div class="footnotes">
 
 <hr />
@@ -236,14 +351,14 @@ As a first approximation, GLA can be described by the following BNF:
       by <span itemprop="author">Yannick Zakowski</span>
     
   
-  <time datetime="2017-07-02T00:00:00&#43;00:00">
-    2 Jul, 2017
+  <time datetime="2017-10-23T00:00:00&#43;00:00">
+    23 Oct, 2017
   </time>
   
     in <span itemprop="articleSection"><a href="/categories/coq/">Coq</a></span>
   
   
-  using <span itemprop="wordCount">336</span> words.
+  using <span itemprop="wordCount">1091</span> words.
 </p>
 
       

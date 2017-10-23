@@ -6,10 +6,20 @@
     <description>Recent content in Posts on Platyblog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Jul 2017 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 23 Oct 2017 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://platyblog.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>To depend or not to depend</title>
+      <link>http://platyblog.github.io/post/gralina/</link>
+      <pubDate>Mon, 23 Oct 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://platyblog.github.io/post/gralina/</guid>
+      <description>Vincent recently pointed us to an introduction1 to a quite sexy recent mathematical theory: Graphical Linear Algebra (GLA). We discuss in this blog post the use of dependent types to formalise this theory, following attempts conducted with Pierre.
+Graphical Linear Algebra The theory of linear algebra is part of the compulsory credentials of any undergrad in mathematics, and crept into numerous scientific fields. Everywhere, the story follows the same (very) rough framework (overlooking the question of the underlying field and so-on).</description>
+    </item>
     
     <item>
       <title>De la finitude de l&#39;être</title>
@@ -19,17 +29,6 @@
       <guid>http://platyblog.github.io/post/streamless/</guid>
       <description>A reddit user, /u/INL_TT, has recently proposed a few problems to be solved using your favourite proof assistant. The last one has been particularly interesting: coq-math-problems.
 The problem is taken from a paper by Coquand and Spiwack1 investigating ways to formalise in a constructivist context the notion of finite set. A common characterisation of a finite set A is the impossibility to inject the natural numbers into A. Or phrased differently, any stream of elements of A contains a duplicate.</description>
-    </item>
-    
-    <item>
-      <title>To depend or not to depend</title>
-      <link>http://platyblog.github.io/post/gralina/</link>
-      <pubDate>Sun, 02 Jul 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://platyblog.github.io/post/gralina/</guid>
-      <description>Vincent recently pointed us to an introduction1 to a quite sexy recent mathematical theory: Graphical Linear Algebra (GLA). We discuss in this blog post the use of dependent types to formalise this theory, following attempts conducted with Pierre.
-#2 Graphical Linear Algebra
-The theory of linear algebra is part of the compulsory credentials of any undergrad in mathematics, and crept into numerous scientific fields. Everywhere, the story follows the same (very) rough framework (overlooking the question of the underlying field and so-on).</description>
     </item>
     
     <item>
